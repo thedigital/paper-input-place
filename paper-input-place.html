@@ -168,6 +168,7 @@ See README.MD for more use examples, styling, api and a link to a live demo page
           cursor: pointer;
           font-size: .85em;
           line-height: 16px;
+          white-space: break-spaces;
         }
       }
 
@@ -215,7 +216,7 @@ See README.MD for more use examples, styling, api and a link to a live demo page
 
     <paper-listbox attr-for-selected="value" slot="dropdown-content" on-selected-changed="_onChangePlace" hidden$="[[!_hasPlaces]]">
       <template is="dom-repeat" items="[[_places]]" as="place">
-          <paper-item value$="[[place.place_id]]">[[place.description]]</paper-item>
+          <paper-item value$="[[place.place_id]]" inner-h-t-m-l="[[_formatContent(place)]]"></paper-item>
       </template>
     </paper-listbox>
 
@@ -768,6 +769,23 @@ See README.MD for more use examples, styling, api and a link to a live demo page
           });
         }
       },
+
+      _formatContent: function(place) {
+        let html = '';
+
+        let last_position = 0;
+        place.matched_substrings.forEach(function(item) {
+          if (item.offset > last_position) {
+            html += '<span>' + place.description.substring(last_position, item.offset) + '</span>';
+          } 
+          
+          html += '<strong>' + place.description.substring(item.offset, item.offset + item.length) + '</strong>';
+          last_position = item.offset + item.length;
+        });
+        html += '<span>' + place.description.substring(last_position) + '</span>';
+
+        return html;
+      }
 
     });
     /**
