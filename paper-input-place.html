@@ -150,7 +150,7 @@ See README.MD for more use examples, styling, api and a link to a live demo page
 
       paper-listbox {
         --paper-listbox: {
-          border: 1px solid var(--paper-input-container-color);
+          box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12), 0 3px 3px -2px rgba(0, 0, 0, 0.4);
           border-radius: 8px;
           margin-top: .5em;
           overflow: auto;
@@ -168,12 +168,33 @@ See README.MD for more use examples, styling, api and a link to a live demo page
           cursor: pointer;
           font-size: .85em;
           line-height: 16px;
+          padding: 2px 4px;
           white-space: break-spaces;
         }
       }
 
+      paper-listbox paper-item iron-icon {
+        --iron-icon-fill-color: #e1e1e1;
+        --iron-icon-height: 24px;
+        --iron-icon-width: 24px;
+        min-width: 24px;
+      }
+
+      paper-listbox paper-item div {
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+      }
+
+      paper-listbox paper-item:not(:last-child) {
+        border-bottom: 1px solid #e1e1e1;
+      }
+
       paper-listbox paper-item:hover {
-        background: #f1f1f1;
+        background: #e1e1e1;
         cursor: pointer;
       }
 
@@ -216,7 +237,10 @@ See README.MD for more use examples, styling, api and a link to a live demo page
 
     <paper-listbox attr-for-selected="value" slot="dropdown-content" on-selected-changed="_onChangePlace" hidden$="[[!_hasPlaces]]">
       <template is="dom-repeat" items="[[_places]]" as="place">
-          <paper-item value$="[[place.place_id]]" inner-h-t-m-l="[[_formatContent(place)]]"></paper-item>
+          <paper-item value$="[[place.place_id]]">
+            <iron-icon id="prefixicon" icon="papinpplc:place"></iron-icon>
+            <div inner-h-t-m-l="[[_formatContent(place)]]"></div>
+          </paper-item>
       </template>
     </paper-listbox>
 
