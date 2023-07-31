@@ -644,7 +644,7 @@ See README.MD for more use examples, styling, api and a link to a live demo page
       },
 
       _onChangePlace: function (e) {
-        if (this.placesService && e.detail?.value) {
+        if (this.placesService && e.detail && e.detail.value) {
           let self = this;
           this.placesService.getDetails({placeId: e.detail.value}, function(pl) {
             if (pl.geometry) {
